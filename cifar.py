@@ -4,7 +4,7 @@ import cPickle
 import numpy as np
 import math, os, pdb
 
-def un_pickle(file_path):
+def unpickle(file_path):
     with open(file_path, 'rb') as fo:
         dict = cPickle.load(fo)
     return dict
@@ -29,28 +29,17 @@ class CIFAR_Image:
 def get_images(blobs, label_names):
     images = []
     for blob in blobs:
-        blob_dict = un_pickle(blob)
+        blob_dict = unpickle(blob)
         data = blob_dict['data']
         labels = blob_dict['labels']
         for i in range(len(labels)):
             images.append(CIFAR_Image(label_names[labels[i]], data[i]))
-            if i % 100 == 0:
-                print str(int(100 * float(len(images))/50000)) + "%"
     return images
 
 def get_label_names(blob):
-    label_dict = un_pickle(blob)['label_names']
+    label_dict = unpickle(blob)['label_names']
     return label_dict
 
 def pickle(obj, file_path):
     with open(file_path, "wb") as fo:
         cPickle.dump(obj, fo)
-
-if __name__ == "__main__":
-    if os.path.exists('images.peck'):
-        images = un_pickle('images.peck')
-    else:
-        blobs = ["/cluster/logan/scraped_data/cifar/cifar-10-batches-py/data_batch_1","/cluster/logan/scraped_data/cifar/cifar-10-batches-py/data_batch_2","/cluster/logan/scraped_data/cifar/cifar-10-batches-py/data_batch_3", "/cluster/logan/scraped_data/cifar/cifar-10-batches-py/data_batch_4","/cluster/logan/scraped_data/cifar/cifar-10-batches-py/data_batch_5"]
-        label_names = get_label_names("/cluster/logan/scraped_data/cifar/cifar-10-batches-py/batches.meta")
-        images = get_images(blobs, label_names)
-    pickle(images, "images.peck")
