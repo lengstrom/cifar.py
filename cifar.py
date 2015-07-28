@@ -1,8 +1,7 @@
 # image indexer
 
 import cPickle
-import numpy as np
-import math, os, pdb
+import math
 
 def unpickle(file_path):
     with open(file_path, 'rb') as fo:
