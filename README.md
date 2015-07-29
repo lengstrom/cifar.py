@@ -1,6 +1,8 @@
 # cifar.py
 
-Python library for handling the CIFAR datasets
+Python library for handling the CIFAR datasets [1]
+
+[1] http://www.cs.toronto.edu/~kriz/cifar.html
 
 ### Docs:
 ```
